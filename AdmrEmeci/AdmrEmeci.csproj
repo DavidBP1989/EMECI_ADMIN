@@ -118,6 +118,7 @@
     <Content Include="Content\easy-autocomplete.min.css" />
     <Content Include="Content\jquery.easy-autocomplete.min.js" />
     <Content Include="Global.asax" />
+    <Content Include="Images\foto-bebe.png" />
     <Content Include="Images\PrintCard.jpg" />
     <Content Include="Models\DBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
