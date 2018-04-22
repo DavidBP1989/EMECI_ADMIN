@@ -1,0 +1,40 @@
+﻿@{
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model AdmrEmeci.Models.ImageCardModel
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>Tarjeta</h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Obtener tarjeta</h3>
+                    <div class="box-tools pull-right">
+                        <div class="has-feedback">
+                            @using (Html.BeginForm("Index", "Card", FormMethod.Post, new { @id = "xpost" }))
+                            {
+                                @Html.TextBoxFor(x => x.CardNumber, null, new { @class = "form-control input-sm", @placeholder = "Buscar #tarjeta" })
+                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <img class="img-responsive pad" src="@Model.UrlImage" alt="Photo" />
+                    @if (!string.IsNullOrEmpty(Model.CardNumberSelected))
+                    {
+                        <p>@Model.PatientName</p>
+                        <a href="@Url.Action("Download", "Card", new { CardNumber = Model.CardNumberSelected })" class="btn btn-default btn-xs">Descargar</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
