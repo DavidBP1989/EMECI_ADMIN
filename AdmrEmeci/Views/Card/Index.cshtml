@@ -34,6 +34,18 @@
                         <a href="@Url.Action("Download", "Card", new { CardNumber = Model.CardNumberSelected })" class="btn btn-default btn-xs">Descargar</a>
                     }
                 </div>
+                <div class="box-body">
+                    @if (Model.Error)
+                    {
+                        <div class="callout callout-warning">
+                            <h4>
+                                <i class="icon fa fa-warning"></i>
+                                Error
+                            </h4>
+                            Tarjeta no encontrada en la base de datos
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>

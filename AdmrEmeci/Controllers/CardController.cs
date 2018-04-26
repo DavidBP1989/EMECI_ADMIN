@@ -42,18 +42,23 @@ namespace AdmrEmeci.Controllers
 
                     if (!ExistImage)
                     {
+                        var query = (from d in DB.DatosTarjeta
+                                     where d.noTarjeta == Model.CardNumber
+                                     orderby d.iddatostarjeta
+                                     select new { d.Dato }).ToList();
+                        if (query.Count == 0)
+                        {
+                            Model.UrlImage = $"{AppSettings["UrlFiles"]}/Images/PrintCard.jpg";
+                            Model.Error = true;
+                            return View(Model);
+                        }
+
                         Bitmap BitMapImage = new Bitmap($"{AppSettings["RutaImages"]}\\PrintCard.jpg");
                         Graphics GraphicImage = Graphics.FromImage(BitMapImage);
 
                         GraphicImage.SmoothingMode = SmoothingMode.AntiAlias;
                         GraphicImage.DrawString(Model.CardNumber, new Font("Arial", 20, FontStyle.Bold),
                             SystemBrushes.WindowText, new Point(50, 175));
-
-
-                        var query = (from d in DB.DatosTarjeta
-                                    where d.noTarjeta == Model.CardNumber
-                                    orderby d.iddatostarjeta
-                                    select new { d.Dato }).ToList();
 
                         int cont = 0, px = 545, py = 41;
                         for (int i = 1; i <= 10; i++)
@@ -84,6 +89,7 @@ namespace AdmrEmeci.Controllers
 
                     Model.UrlImage = $"{AppSettings["UrlFiles"]}/Images/{Model.CardNumber}.jpg";
                     Model.CardNumberSelected = Model.CardNumber;
+                    Model.Error = false;
                 }
                 catch (Exception)
                 {

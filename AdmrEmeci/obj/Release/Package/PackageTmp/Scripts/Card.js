@@ -22,8 +22,8 @@
             list:
                 {
                     onClickEvent: function () {
-                        
-                        $('#xpost').submit();
+                        if ($('#CardNumber').val() != '')
+                            $('#xpost').submit();
                     }
                 }
         };

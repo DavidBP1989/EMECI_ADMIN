@@ -6,5 +6,6 @@
         public string UrlImage { get; set; }
         public string PatientName { get; set; }
         public string CardNumberSelected { get; set; }
+        public bool Error { get; set; } = false;
     }
 }
