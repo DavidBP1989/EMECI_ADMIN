@@ -27,5 +27,8 @@ namespace AdmrEmeci.Models
     
         public DbSet<DatosTarjeta> DatosTarjeta { get; set; }
         public DbSet<Registro> Registro { get; set; }
+        public DbSet<Ciudades> Ciudades { get; set; }
+        public DbSet<Estados> Estados { get; set; }
+        public DbSet<Usuarios> Usuarios { get; set; }
     }
 }

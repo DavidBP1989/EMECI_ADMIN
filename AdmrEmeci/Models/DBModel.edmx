@@ -5,14 +5,35 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="EmeciModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Ciudades">
+          <Key>
+            <PropertyRef Name="idciudad" />
+          </Key>
+          <Property Name="idciudad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="idEstado" Type="nvarchar" MaxLength="2" />
+          <Property Name="IdPais" Type="nvarchar" MaxLength="2" />
+        </EntityType>
         <EntityType Name="DatosTarjeta">
           <Key>
             <PropertyRef Name="iddatostarjeta" />
           </Key>
-          <Property Name="noTarjeta" Type="nvarchar" MaxLength="15" />
+          <Property Name="noTarjeta" Type="nvarchar" MaxLength="16" />
           <Property Name="Coordenada" Type="nvarchar" MaxLength="3" />
           <Property Name="Dato" Type="nvarchar" MaxLength="3" />
           <Property Name="iddatostarjeta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'emeci.dbo.Estados' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Estados">
+          <Key>
+            <PropertyRef Name="idEstado" />
+            <PropertyRef Name="IdPais" />
+          </Key>
+          <Property Name="idEstado" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="IdPais" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="codigo" Type="nvarchar" MaxLength="2" />
         </EntityType>
         <EntityType Name="Registro">
           <Key>
@@ -39,12 +60,44 @@
           <Property Name="NoExt" Type="nvarchar" MaxLength="5" />
           <Property Name="CodigoPostal" Type="nvarchar" MaxLength="5" />
           <Property Name="clave" Type="nvarchar" MaxLength="15" />
-          <Property Name="Emeci" Type="nvarchar" MaxLength="15" />
+          <Property Name="Emeci" Type="nvarchar" MaxLength="16" />
           <Property Name="apellido2" Type="nvarchar" MaxLength="25" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'emeci.dbo.Usuarios' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="25" />
+          <Property Name="Password" Type="nvarchar" MaxLength="25" />
+          <Property Name="Status" Type="nvarchar" MaxLength="1" />
+          <Property Name="FechaAcceso" Type="smalldatetime" />
+          <Property Name="NoTarjeta" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityContainer Name="EmeciModelStoreContainer">
+          <EntitySet Name="Ciudades" EntityType="Self.Ciudades" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DatosTarjeta" EntityType="Self.DatosTarjeta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Registro" EntityType="Self.Registro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estados" EntityType="Self.Estados" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[Estados].[idEstado] AS [idEstado], 
+[Estados].[Nombre] AS [Nombre], 
+[Estados].[IdPais] AS [IdPais], 
+[Estados].[codigo] AS [codigo]
+FROM [dbo].[Estados] AS [Estados]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[Usuarios].[IdUsuario] AS [IdUsuario], 
+[Usuarios].[Nombre] AS [Nombre], 
+[Usuarios].[Password] AS [Password], 
+[Usuarios].[Status] AS [Status], 
+[Usuarios].[FechaAcceso] AS [FechaAcceso], 
+[Usuarios].[NoTarjeta] AS [NoTarjeta]
+FROM [dbo].[Usuarios] AS [Usuarios]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -54,7 +107,7 @@
           <Key>
             <PropertyRef Name="iddatostarjeta" />
           </Key>
-          <Property Name="noTarjeta" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="noTarjeta" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
           <Property Name="Coordenada" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="Dato" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="iddatostarjeta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
@@ -62,6 +115,9 @@
         <EntityContainer Name="EmeciEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="DatosTarjeta" EntityType="Self.DatosTarjeta" />
           <EntitySet Name="Registro" EntityType="EmeciModel.Registro" />
+          <EntitySet Name="Ciudades" EntityType="EmeciModel.Ciudades" />
+          <EntitySet Name="Estados" EntityType="EmeciModel.Estados" />
+          <EntitySet Name="Usuarios" EntityType="EmeciModel.Usuarios" />
         </EntityContainer>
         <EntityType Name="Registro">
           <Key>
@@ -88,8 +144,38 @@
           <Property Name="NoExt" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="CodigoPostal" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="clave" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="Emeci" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Emeci" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
           <Property Name="apellido2" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Ciudades">
+          <Key>
+            <PropertyRef Name="idciudad" />
+          </Key>
+          <Property Name="idciudad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="idEstado" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="IdPais" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Estados">
+          <Key>
+            <PropertyRef Name="idEstado" />
+            <PropertyRef Name="IdPais" />
+          </Key>
+          <Property Name="idEstado" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdPais" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="codigo" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="FechaAcceso" Type="DateTime" Precision="0" />
+          <Property Name="NoTarjeta" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -133,6 +219,38 @@
                 <ScalarProperty Name="Apellido" ColumnName="Apellido" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="idRegistro" ColumnName="idRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ciudades">
+            <EntityTypeMapping TypeName="EmeciModel.Ciudades">
+              <MappingFragment StoreEntitySet="Ciudades">
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="idciudad" ColumnName="idciudad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estados">
+            <EntityTypeMapping TypeName="EmeciModel.Estados">
+              <MappingFragment StoreEntitySet="Estados">
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="EmeciModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="NoTarjeta" ColumnName="NoTarjeta" />
+                <ScalarProperty Name="FechaAcceso" ColumnName="FechaAcceso" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

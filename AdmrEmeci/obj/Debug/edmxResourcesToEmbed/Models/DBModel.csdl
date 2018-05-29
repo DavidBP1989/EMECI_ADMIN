@@ -4,7 +4,7 @@
     <Key>
       <PropertyRef Name="iddatostarjeta" />
     </Key>
-    <Property Name="noTarjeta" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="noTarjeta" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
     <Property Name="Coordenada" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
     <Property Name="Dato" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
     <Property Name="iddatostarjeta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
@@ -12,6 +12,9 @@
   <EntityContainer Name="EmeciEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="DatosTarjeta" EntityType="Self.DatosTarjeta" />
     <EntitySet Name="Registro" EntityType="EmeciModel.Registro" />
+    <EntitySet Name="Ciudades" EntityType="EmeciModel.Ciudades" />
+    <EntitySet Name="Estados" EntityType="EmeciModel.Estados" />
+    <EntitySet Name="Usuarios" EntityType="EmeciModel.Usuarios" />
   </EntityContainer>
   <EntityType Name="Registro">
     <Key>
@@ -38,7 +41,37 @@
     <Property Name="NoExt" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
     <Property Name="CodigoPostal" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
     <Property Name="clave" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-    <Property Name="Emeci" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Emeci" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
     <Property Name="apellido2" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Ciudades">
+    <Key>
+      <PropertyRef Name="idciudad" />
+    </Key>
+    <Property Name="idciudad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="idEstado" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="IdPais" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Estados">
+    <Key>
+      <PropertyRef Name="idEstado" />
+      <PropertyRef Name="IdPais" />
+    </Key>
+    <Property Name="idEstado" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IdPais" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="codigo" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="IdUsuario" />
+    </Key>
+    <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="Nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="FechaAcceso" Type="DateTime" Precision="0" />
+    <Property Name="NoTarjeta" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>

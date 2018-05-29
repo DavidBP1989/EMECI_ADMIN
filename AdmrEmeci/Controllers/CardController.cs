@@ -12,7 +12,8 @@ using static System.Configuration.ConfigurationManager;
 
 namespace AdmrEmeci.Controllers
 {
-    public class CardController : Controller
+    [Authorize]
+    public class CardController : BaseController
     {
         EmeciEntities DB = new EmeciEntities();
 

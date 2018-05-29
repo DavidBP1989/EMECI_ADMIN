@@ -63,6 +63,14 @@
       <HintPath>..\packages\Newtonsoft.Json.5.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -117,8 +125,11 @@
   <ItemGroup>
     <Content Include="Content\easy-autocomplete.min.css" />
     <Content Include="Content\jquery.easy-autocomplete.min.js" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Global.asax" />
+    <Content Include="Images\fondo-acceso-emeci.jpg" />
     <Content Include="Images\foto-bebe.png" />
+    <Content Include="Images\logo.png" />
     <Content Include="Images\PrintCard.jpg" />
     <Content Include="Models\DBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -131,17 +142,25 @@
       <LastGenOutput>DBModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\Card.js" />
+    <Content Include="Scripts\DoctorList.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Code\Export.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CardController.cs" />
+    <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Ciudades.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DatosTarjeta.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
@@ -161,8 +180,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\DoctorList.cs" />
+    <Compile Include="Models\Estados.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ImageCardModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Registro.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Usuarios.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -181,6 +208,9 @@
       <DependentUpon>DBModel.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\AdmrEmeciPublish.pubxml" />
+    <Content Include="Views\Doctor\List.cshtml" />
+    <Content Include="Views\Account\LogIn.cshtml" />
+    <Content Include="Views\Shared\_Account.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -194,6 +224,8 @@
     <Folder Include="Content\build\" />
     <Folder Include="Content\dist\" />
     <Folder Include="Content\plugins\" />
+    <Folder Include="Views\Base\" />
+    <Folder Include="Views\LogIn\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

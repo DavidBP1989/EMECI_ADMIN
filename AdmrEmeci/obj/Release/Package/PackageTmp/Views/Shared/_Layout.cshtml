@@ -25,10 +25,11 @@
         switch (route)
         {
             case "card":
+            case "doctor":
                 <link rel="stylesheet" href="~/Content/easy-autocomplete.min.css" />
                 break;
         }
-    }
+        }
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -55,7 +56,12 @@
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                            <a href="@Url.Action("LogOut", "Account")">
+                                <span>Cerrar sesi&oacute;n</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-gears"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -96,6 +102,11 @@
                             <i class="fa fa-id-card"></i> <span>Tarjeta</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="@Url.Action("List", "Doctor")">
+                            <i class="fa fa-list-ol"></i> <span>Doctores</span>
+                        </a>
+                    </li>
                 </ul>
             </section>
         </aside>
@@ -121,6 +132,10 @@
             case "card":
                 <script src="~/Content/jquery.easy-autocomplete.min.js"></script>
                 <script src="~/Scripts/Card.js"></script>
+                break;
+            case "doctor":
+                <script src="~/Content/jquery.easy-autocomplete.min.js"></script>
+                <script src="~/Scripts/DoctorList.js"></script>
                 break;
         }
     }

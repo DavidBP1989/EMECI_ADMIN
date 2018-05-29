@@ -3237,8 +3237,9 @@ table.text-center th {
 .register-logo {
   font-size: 35px;
   text-align: center;
-  margin-bottom: 25px;
+  /*margin-bottom: 25px;*/
   font-weight: 300;
+  background-color: white;
 }
 .login-logo a,
 .register-logo a {
@@ -3247,7 +3248,15 @@ table.text-center th {
 .login-page,
 .register-page {
   background: #d2d6de;
+  background-image: url(Images/fondo-acceso-emeci.jpg);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100%;
+  background-position: center;
+
 }
+.login-page p{ color:white; }
 .login-box,
 .register-box {
   width: 360px;

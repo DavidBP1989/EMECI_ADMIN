@@ -18,6 +18,8 @@
 \\Mac\Home\Documents\DAVID-PROYECTOS\EMECI\-ADMIN\AdmrEmeci\AdmrEmeci\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 \\Mac\Home\Documents\DAVID-PROYECTOS\EMECI\-ADMIN\AdmrEmeci\AdmrEmeci\bin\Microsoft.Web.Infrastructure.dll
 \\Mac\Home\Documents\DAVID-PROYECTOS\EMECI\-ADMIN\AdmrEmeci\AdmrEmeci\bin\Newtonsoft.Json.dll
+\\Mac\Home\Documents\DAVID-PROYECTOS\EMECI\-ADMIN\AdmrEmeci\AdmrEmeci\bin\PagedList.dll
+\\Mac\Home\Documents\DAVID-PROYECTOS\EMECI\-ADMIN\AdmrEmeci\AdmrEmeci\bin\PagedList.Mvc.dll
 \\Mac\Home\Documents\DAVID-PROYECTOS\EMECI\-ADMIN\AdmrEmeci\AdmrEmeci\bin\System.Web.Helpers.dll
 \\Mac\Home\Documents\DAVID-PROYECTOS\EMECI\-ADMIN\AdmrEmeci\AdmrEmeci\bin\System.Web.Mvc.dll
 \\Mac\Home\Documents\DAVID-PROYECTOS\EMECI\-ADMIN\AdmrEmeci\AdmrEmeci\bin\System.Web.Optimization.dll
@@ -30,6 +32,8 @@
 \\Mac\Home\Documents\DAVID-PROYECTOS\EMECI\-ADMIN\AdmrEmeci\AdmrEmeci\bin\EntityFramework.xml
 \\Mac\Home\Documents\DAVID-PROYECTOS\EMECI\-ADMIN\AdmrEmeci\AdmrEmeci\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 \\Mac\Home\Documents\DAVID-PROYECTOS\EMECI\-ADMIN\AdmrEmeci\AdmrEmeci\bin\Newtonsoft.Json.xml
+\\Mac\Home\Documents\DAVID-PROYECTOS\EMECI\-ADMIN\AdmrEmeci\AdmrEmeci\bin\PagedList.xml
+\\Mac\Home\Documents\DAVID-PROYECTOS\EMECI\-ADMIN\AdmrEmeci\AdmrEmeci\bin\PagedList.Mvc.xml
 \\Mac\Home\Documents\DAVID-PROYECTOS\EMECI\-ADMIN\AdmrEmeci\AdmrEmeci\bin\System.Web.Optimization.xml
 \\Mac\Home\Documents\DAVID-PROYECTOS\EMECI\-ADMIN\AdmrEmeci\AdmrEmeci\bin\System.Web.Razor.xml
 \\Mac\Home\Documents\DAVID-PROYECTOS\EMECI\-ADMIN\AdmrEmeci\AdmrEmeci\bin\System.Web.Webpages.xml
@@ -39,4 +43,3 @@
 \\Mac\Home\Documents\DAVID-PROYECTOS\EMECI\-ADMIN\AdmrEmeci\AdmrEmeci\bin\System.Web.Mvc.xml
 \\Mac\Home\Documents\DAVID-PROYECTOS\EMECI\-ADMIN\AdmrEmeci\AdmrEmeci\obj\Debug\AdmrEmeci.dll
 \\Mac\Home\Documents\DAVID-PROYECTOS\EMECI\-ADMIN\AdmrEmeci\AdmrEmeci\obj\Debug\AdmrEmeci.pdb
-\\Mac\Home\Documents\DAVID-PROYECTOS\EMECI\-ADMIN\AdmrEmeci\AdmrEmeci\obj\Debug\AdmrEmeci.csprojResolveAssemblyReference.cache
