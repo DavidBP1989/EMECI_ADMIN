@@ -26,9 +26,10 @@
         {
             case "card":
             case "doctor":
+            case "patient":
                 <link rel="stylesheet" href="~/Content/easy-autocomplete.min.css" />
-                break;
-        }
+                    break;
+            }
         }
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -107,6 +108,11 @@
                             <i class="fa fa-list-ol"></i> <span>Doctores</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="@Url.Action("List", "Patient")">
+                            <i class="fa fa-list-ol"></i> <span>Pacientes</span>
+                        </a>
+                    </li>
                 </ul>
             </section>
         </aside>
@@ -134,11 +140,12 @@
                 <script src="~/Scripts/Card.js"></script>
                 break;
             case "doctor":
+            case "patient":
                 <script src="~/Content/jquery.easy-autocomplete.min.js"></script>
-                <script src="~/Scripts/DoctorList.js"></script>
-                break;
+                <script src="~/Scripts/Autocomplete_List.js"></script>
+                    break;
+            }
         }
-    }
     <script>
         $(document).ready(function () {
             $('.sidebar-menu').tree()

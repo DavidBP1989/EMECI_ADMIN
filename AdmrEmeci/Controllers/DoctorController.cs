@@ -46,7 +46,7 @@ namespace AdmrEmeci.Controllers
                                                 City = c.Nombre,
                                                 Phone = r.Telefono,
                                                 CellPhone = r.TelefonoCel,
-                                                Email = r.Emails
+                                                Email = r.Emails.Replace(",", Environment.NewLine)
                                             }).AsEnumerable().Cast<ListOfDoctor>().ToList();
 
                 if (query.Count == 0)
@@ -71,13 +71,14 @@ namespace AdmrEmeci.Controllers
         }
 
 
-
         public void ExportExcel()
         {
             List<ListOfDoctor> DoctorList = GetAllDoctor();
+            foreach(ListOfDoctor Doctor in DoctorList)
+                Doctor.Email.Replace(Environment.NewLine, ",");
             DataTable TableExcel = ConvertToDataTable(DoctorList);
 
-            new Export().ToExcel(Response, TableExcel, "ListaDeDoctores");
+            new Export().ToExcel(Response, TableExcel, "Lista_De_Doctores");
         }
 
 
@@ -98,6 +99,14 @@ namespace AdmrEmeci.Controllers
                 TableExcel.Rows.Add(Row);
             }
 
+            TableExcel.Columns["DoctorName"].ColumnName = "Nombre del doctor";
+            TableExcel.Columns["DoctorLastName"].ColumnName = "Apellido(s) del doctor";
+            TableExcel.Columns["State"].ColumnName = "Estado";
+            TableExcel.Columns["City"].ColumnName = "Ciudad";
+            TableExcel.Columns["Phone"].ColumnName = "Teléfono(s)";
+            TableExcel.Columns["CellPhone"].ColumnName = "Teléfono celular";
+            TableExcel.Columns["Email"].ColumnName = "Correo electrónico";
+
             return TableExcel;
         }
 
@@ -117,7 +126,7 @@ namespace AdmrEmeci.Controllers
                                             City = c.Nombre,
                                             Phone = r.Telefono,
                                             CellPhone = r.TelefonoCel,
-                                            Email = r.Emails
+                                            Email = r.Emails.Replace(",", Environment.NewLine)
                                         }).AsEnumerable().Cast<ListOfDoctor>().ToList();
             return query;
         }

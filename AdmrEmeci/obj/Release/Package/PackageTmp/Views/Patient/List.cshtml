@@ -1,0 +1,89 @@
+﻿@using PagedList.Mvc;
+@using AdmrEmeci.Models;
+@model PatientList
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Pacientes
+        <small>Lista de pacientes</small>
+    </h1>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Pacientes</h3>
+                    <div class="box-tools pull-right">
+                        <div class="has-feedback">
+                            @using (Html.BeginForm("List", "Patient", FormMethod.Post, new { @id = "xpost" }))
+                            {
+                                @Html.TextBoxFor(x => x.CardNumber, null, new { @class = "form-control input-sm", @placeholder = "Buscar Paciente" })
+                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <tbody>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>EMECI</th>
+                                    <th>Estado</th>
+                                    <th>Ciudad</th>
+                                    <th>Tel&eacute;fono(s)</th>
+                                    <th>Tel&eacute;fono(s) celular</th>
+                                    <th>Correo</th>
+                                    <th>Fecha de activaci&oacute;n</th>
+                                    <th>Fecha de expiraci&oacute;n</th>
+                                </tr>
+                                @foreach (ListOfPatient Row in Model.LPatient)
+                                {
+                                    <tr>
+                                        <td>@Row.PatientName @Row.PatientLastName</td>
+                                        <td>@Row.EMECI</td>
+                                        <td>@Row.State</td>
+                                        <td>@Row.City</td>
+                                        <td>@Row.Phone</td>
+                                        <td>@Row.CellPhone</td>
+                                        <td>@Row.Email</td>
+                                        <td>@Row.ActivationDate.Value.ToString("dd/MM/yyyy")</td>
+                                        <td>@Row.DueDate.Value.ToString("dd/MM/yyyy")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="box-body">
+                    @if (Model.Error)
+                    {
+                        <div class="callout callout-warning">
+                            <h4>
+                                <i class="icon fa fa-warning"></i>
+                                Error
+                            </h4>
+                            Tarjeta no encontrada en la base de datos
+                        </div>
+                    }
+                </div>
+                <div class="box-footer clearfix">
+                    @if (string.IsNullOrEmpty(Model.CardNumberSelected))
+                    {
+                        @Html.PagedListPager(Model.LPatient, Page => Url.Action("List", new { Page, PageSize = Model.LPatient.PageSize }))
+                    }
+
+                    <br />
+                    @Html.ActionLink("Exportar a Excel", "ExportExcel")
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -54,6 +54,9 @@
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EPPlus">
+      <HintPath>..\..\..\..\..\..\Downloads\sourceCode\epplus\EPPlus\bin\Debug\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -142,7 +145,7 @@
       <LastGenOutput>DBModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\Card.js" />
-    <Content Include="Scripts\DoctorList.js" />
+    <Content Include="Scripts\Autocomplete_List.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -156,6 +159,7 @@
     <Compile Include="Controllers\CardController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -186,6 +190,7 @@
     </Compile>
     <Compile Include="Models\ImageCardModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\PatientList.cs" />
     <Compile Include="Models\Registro.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -211,6 +216,7 @@
     <Content Include="Views\Doctor\List.cshtml" />
     <Content Include="Views\Account\LogIn.cshtml" />
     <Content Include="Views\Shared\_Account.cshtml" />
+    <Content Include="Views\Patient\List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
