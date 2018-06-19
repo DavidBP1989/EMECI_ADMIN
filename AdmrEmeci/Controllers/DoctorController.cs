@@ -114,8 +114,10 @@ namespace AdmrEmeci.Controllers
         List<ListOfDoctor> GetAllDoctor()
         {
             List<ListOfDoctor> query = (from r in DB.Registro
-                                        join e in DB.Estados on r.idEstado equals e.idEstado
-                                        join c in DB.Ciudades on r.idCiudad equals c.idciudad
+                                        join e in DB.Estados on r.idEstado equals e.idEstado into es
+                                        from e in es.DefaultIfEmpty()
+                                        join c in DB.Ciudades on r.idCiudad equals c.idciudad into ci
+                                        from c in ci.DefaultIfEmpty()
                                         where r.Tipo == "M"
                                         select new ListOfDoctor()
                                         {
