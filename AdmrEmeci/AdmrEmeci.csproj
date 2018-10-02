@@ -146,6 +146,8 @@
     </Content>
     <Content Include="Scripts\Card.js" />
     <Content Include="Scripts\Autocomplete_List.js" />
+    <Content Include="Scripts\cardExpiration.js" />
+    <Content Include="Scripts\Seeker.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -158,6 +160,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CardController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
+    <Compile Include="Controllers\HelperController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Global.asax.cs">
@@ -189,11 +192,14 @@
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ImageCardModel.cs" />
+    <Compile Include="Models\ListOfPatientModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PatientList.cs" />
+    <Compile Include="Models\PrintCardModel.cs" />
     <Compile Include="Models\Registro.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SeekerModel.cs" />
     <Compile Include="Models\Usuarios.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -217,6 +223,9 @@
     <Content Include="Views\Account\LogIn.cshtml" />
     <Content Include="Views\Shared\_Account.cshtml" />
     <Content Include="Views\Patient\List.cshtml" />
+    <Content Include="Views\Card\CardExpiration.cshtml" />
+    <Content Include="Views\Helper\Seeker.cshtml" />
+    <Content Include="Views\Card\PrintCard.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -236,6 +245,12 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AdmrEmeci.Manager\AdmrEmeci.Manager.csproj">
+      <Project>{0934d9c6-d929-47af-8b69-d00e69ac7c17}</Project>
+      <Name>AdmrEmeci.Manager</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

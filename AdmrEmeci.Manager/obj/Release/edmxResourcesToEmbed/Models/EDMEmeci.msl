@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EmeciModelStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="Registro">
+      <EntityTypeMapping TypeName="EmeciModel.Registro">
+        <MappingFragment StoreEntitySet="Registro">
+          <ScalarProperty Name="idRegistro" ColumnName="idRegistro" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+          <ScalarProperty Name="Domicilio" ColumnName="Domicilio" />
+          <ScalarProperty Name="Colonia" ColumnName="Colonia" />
+          <ScalarProperty Name="idCiudad" ColumnName="idCiudad" />
+          <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+          <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+          <ScalarProperty Name="TelefonoCel" ColumnName="TelefonoCel" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+          <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+          <ScalarProperty Name="FechaExpiracion" ColumnName="FechaExpiracion" />
+          <ScalarProperty Name="Emails" ColumnName="Emails" />
+          <ScalarProperty Name="FechaRenovacion" ColumnName="FechaRenovacion" />
+          <ScalarProperty Name="OtraCiudad" ColumnName="OtraCiudad" />
+          <ScalarProperty Name="NoExt" ColumnName="NoExt" />
+          <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+          <ScalarProperty Name="clave" ColumnName="clave" />
+          <ScalarProperty Name="Emeci" ColumnName="Emeci" />
+          <ScalarProperty Name="apellido2" ColumnName="apellido2" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ciudades">
+      <EntityTypeMapping TypeName="EmeciModel.Ciudades">
+        <MappingFragment StoreEntitySet="Ciudades">
+          <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+          <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="idciudad" ColumnName="idciudad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Estados">
+      <EntityTypeMapping TypeName="EmeciModel.Estados">
+        <MappingFragment StoreEntitySet="Estados">
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
+          <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DatosTarjeta">
+      <EntityTypeMapping TypeName="EmeciModel.DatosTarjeta">
+        <MappingFragment StoreEntitySet="DatosTarjeta">
+          <ScalarProperty Name="iddatostarjeta" ColumnName="iddatostarjeta" />
+          <ScalarProperty Name="Dato" ColumnName="Dato" />
+          <ScalarProperty Name="Coordenada" ColumnName="Coordenada" />
+          <ScalarProperty Name="noTarjeta" ColumnName="noTarjeta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

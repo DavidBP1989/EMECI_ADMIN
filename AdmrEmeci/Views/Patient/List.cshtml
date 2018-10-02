@@ -44,18 +44,18 @@
                                     <th>Fecha de activaci&oacute;n</th>
                                     <th>Fecha de expiraci&oacute;n</th>
                                 </tr>
-                                @foreach (ListOfPatient Row in Model.LPatient)
+                                @foreach (ListOfPatient row in Model.LPatient)
                                 {
                                     <tr>
-                                        <td>@Row.PatientName @Row.PatientLastName</td>
-                                        <td>@Row.EMECI</td>
-                                        <td>@Row.State</td>
-                                        <td>@Row.City</td>
-                                        <td>@Row.Phone</td>
-                                        <td>@Row.CellPhone</td>
-                                        <td>@Row.Email</td>
-                                        <td>@Row.ActivationDate.Value.ToString("dd/MM/yyyy")</td>
-                                        <td>@Row.DueDate.Value.ToString("dd/MM/yyyy")</td>
+                                        <td>@row.PatientName @row.PatientLastName</td>
+                                        <td>@row.EMECI</td>
+                                        <td>@row.State</td>
+                                        <td>@row.City</td>
+                                        <td>@row.Phone</td>
+                                        <td>@row.CellPhone</td>
+                                        <td>@row.Email</td>
+                                        <td>@row.ActivationDate.Value.ToString("dd/MM/yyyy")</td>
+                                        <td>@row.DueDate.Value.ToString("dd/MM/yyyy")</td>
                                     </tr>
                                 }
                             </tbody>

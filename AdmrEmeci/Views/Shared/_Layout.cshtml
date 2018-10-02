@@ -98,10 +98,25 @@
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">Navegaci&oacute;n principal</li>
-                    <li>
-                        <a href="@Url.Action("Index", "Card")">
+                    <li class="treeview">
+                        <a href="#">
                             <i class="fa fa-id-card"></i> <span>Tarjeta</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
                         </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="@Url.Action("PrintCard", "Card")">
+                                    <i class="fa fa-circle-o"></i> Imprimir tarjeta
+                                </a>
+                            </li>
+                            <li>
+                                <a onclick="ClearSession();" href="@Url.Action("CardExpiration", "Card")">
+                                    <i class="fa fa-circle-o"></i>Vencimiento de tarjeta
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="@Url.Action("List", "Doctor")">
@@ -135,10 +150,6 @@
     @{ 
         switch (route)
         {
-            case "card":
-                <script src="~/Content/jquery.easy-autocomplete.min.js"></script>
-                <script src="~/Scripts/Card.js"></script>
-                break;
             case "doctor":
             case "patient":
                 <script src="~/Content/jquery.easy-autocomplete.min.js"></script>
@@ -150,6 +161,11 @@
         $(document).ready(function () {
             $('.sidebar-menu').tree()
         });
+        function ClearSession()
+        {
+            sessionStorage.clear();
+        }
     </script>
+    @RenderSection("Scripts", false)
 </body>
 </html>

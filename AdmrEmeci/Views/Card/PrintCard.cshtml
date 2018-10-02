@@ -1,0 +1,55 @@
+﻿@model AdmrEmeci.Models.PrintCardModel
+@section Scripts
+{
+    <script src="~/Content/jquery.easy-autocomplete.min.js"></script>
+    <script src="~/Scripts/Seeker.js"></script>
+    <script src="~/Scripts/Card.js"></script>
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content-header">
+    <h1>Imprimir tarjeta EMECI</h1>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <h3 class="box-title">Obtener tarjeta</h3>
+                        </div>
+                        <div class="col-lg-3 pull-right text-center">
+                            @if (!string.IsNullOrEmpty(Model.EmeciSelected) && !Model.IsError)
+                            {
+                                <a href="@Url.Action("Download", "Card", new { emeci = Model.EmeciSelected })" class="btn btn-primary">Descargar</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+                @Html.Partial("~/Views/Helper/Seeker.cshtml")
+                <div class="box-body">
+                    @using (Html.BeginForm("PrintCard", "Card", FormMethod.Post, new { @id = "content_form" }))
+                    {
+                        @Html.HiddenFor(x => x.EmeciSelected)
+                    }
+
+                    <img class="img-responsive pad" src="@Model.UrlImage" alt="Photo" />
+                </div>
+                <div class="box-footer">
+                    @if (Model.IsError)
+                    {
+                        <div class="callout callout-warning">
+                            <h4>
+                                <i class="icon fa fa-warning"></i>
+                                Error
+                            </h4>
+                            @Model.Error
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

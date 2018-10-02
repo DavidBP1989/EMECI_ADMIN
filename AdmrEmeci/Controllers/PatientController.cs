@@ -13,31 +13,40 @@ namespace AdmrEmeci.Controllers
     [Authorize]
     public class PatientController : Controller
     {
-        EmeciEntities DB = new EmeciEntities();
+        EmeciEntities Db = new EmeciEntities();
 
         [HttpGet]
-        public ActionResult List(int Page = 1, int PageSize = 10)
+        public ActionResult List(int page = 1, int pageSize = 10)
         {
-            PatientList Model = new PatientList();
+            PatientList model = new PatientList();
 
-            PagedList<ListOfPatient> _PagedList = new PagedList<ListOfPatient>(GetAllPatients(), Page, PageSize);
-            Model.LPatient = _PagedList;
-            return View(Model);
+            PagedList<ListOfPatient> pagedList = new PagedList<ListOfPatient>(GetAllPatients(), page, pageSize);
+            model.LPatient = pagedList;
+            return View(model);
         }
 
 
         [HttpPost]
-        public ActionResult List(PatientList Model)
+        public ActionResult List(PatientList model)
         {
             if (ModelState.IsValid)
             {
-                List<ListOfPatient> query = (from r in DB.Registro
-                                            join e in DB.Estados on r.idEstado equals e.idEstado into es
+                PagedList<ListOfPatient> pagedList;
+                if (model.CardNumber == null)
+                {
+                    pagedList = new PagedList<ListOfPatient>(GetAllPatients(), 1, 10);
+                    model.LPatient = pagedList;
+                    model.Error = false;
+                    return View(model);
+                }
+
+                List<ListOfPatient> query = (from r in Db.Registro
+                                            join e in Db.Estados on r.idEstado equals e.idEstado into es
                                             from e in es.DefaultIfEmpty()
-                                            join c in DB.Ciudades on r.idCiudad equals c.idciudad into ci
+                                            join c in Db.Ciudades on r.idCiudad equals c.idciudad into ci
                                             from c in ci.DefaultIfEmpty()
                                             where r.Tipo == "P" &&
-                                            (!string.IsNullOrEmpty(Model.CardNumber) ? r.Emeci == Model.CardNumber : r.Tipo != "P")
+                                            (!string.IsNullOrEmpty(model.CardNumber) ? r.Emeci == model.CardNumber : r.Tipo != "P")
                                             select new ListOfPatient()
                                             {
                                                 PatientName = r.Nombre,
@@ -50,24 +59,25 @@ namespace AdmrEmeci.Controllers
                                                 Email = r.Emails.Replace(",", Environment.NewLine),
                                                 ActivationDate = r.FechaRegistro.HasValue ? r.FechaRegistro.Value : (DateTime?)null,
                                                 DueDate = r.FechaExpiracion.HasValue ? r.FechaExpiracion.Value : (DateTime?)null
-                                            }).AsEnumerable().Cast<ListOfPatient>().ToList();
+                                            }).OrderByDescending(x => x.ActivationDate)
+                                            .AsEnumerable().Cast<ListOfPatient>().ToList();
 
                 if (query.Count == 0)
-                    Model.Error = true;
-                PagedList<ListOfPatient> _PagedList = new PagedList<ListOfPatient>(query, 1, 10);
-                Model.LPatient = _PagedList;
-                Model.CardNumberSelected = Model.CardNumber;
+                    model.Error = true;
+                pagedList = new PagedList<ListOfPatient>(query, 1, 10);
+                model.LPatient = pagedList;
+                model.CardNumberSelected = model.CardNumber;
             }
 
-            return View(Model);
+            return View(model);
         }
 
 
         [HttpPost]
-        public JsonResult AutoComplete(string Prefix)
+        public JsonResult AutoComplete(string prefix)
         {
-            var query = (from r in DB.Registro
-                         where r.Emeci.StartsWith(Prefix) && r.Tipo == "P"
+            var query = (from r in Db.Registro
+                         where r.Emeci.StartsWith(prefix) && r.Tipo == "P"
                          select new { r.Emeci }).Take(10);
 
             return Json(query, JsonRequestBehavior.AllowGet);
@@ -77,61 +87,60 @@ namespace AdmrEmeci.Controllers
 
         public void ExportExcel()
         {
-            List<ListOfPatient> PatientList = GetAllPatients();
-            DataTable TableExcel = ConvertToDataTable(PatientList);
+            List<ListOfPatient> patientList = GetAllPatients();
+            DataTable tableExcel = ConvertToDataTable(patientList);
 
-            new Export().ToExcel(Response, TableExcel, "Lista_De_Pacientes");
+            new Export().ToExcel(Response, tableExcel, "Lista_De_Pacientes");
         }
 
 
-        DataTable ConvertToDataTable(IList<ListOfPatient> Data)
+        DataTable ConvertToDataTable(IList<ListOfPatient> data)
         {
 
-            PropertyDescriptorCollection Properties =
-                TypeDescriptor.GetProperties(typeof(ListOfPatient));
-            DataTable TableExcel = new DataTable();
+            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(ListOfPatient));
+            DataTable tableExcel = new DataTable();
 
-            foreach (PropertyDescriptor Prop in Properties)
+            foreach (PropertyDescriptor prop in properties)
             {
-                if (Prop.PropertyType == typeof(DateTime?))
-                    TableExcel.Columns.Add(Prop.Name, typeof(string));
-                else TableExcel.Columns.Add(Prop.Name, Nullable.GetUnderlyingType(Prop.PropertyType) ?? Prop.PropertyType);
+                if (prop.PropertyType == typeof(DateTime?))
+                    tableExcel.Columns.Add(prop.Name, typeof(string));
+                else tableExcel.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
             }
-            foreach (ListOfPatient Item in Data)
+            foreach (ListOfPatient item in data)
             {
-                DataRow Row = TableExcel.NewRow();
-                foreach (PropertyDescriptor Prop in Properties)
+                DataRow row = tableExcel.NewRow();
+                foreach (PropertyDescriptor prop in properties)
                 {
-                    if (Prop.Name == "ActivationDate" || Prop.Name == "DueDate")
+                    if (prop.Name == "ActivationDate" || prop.Name == "DueDate")
                     {
-                        DateTime? Date = Convert.ToDateTime(Prop.GetValue(Item) ?? (DateTime?)null);
-                        Row[Prop.Name] = Date.HasValue ? Date.Value.ToString("dd/MM/yyyy") : string.Empty;
+                        DateTime? date = Convert.ToDateTime(prop.GetValue(item) ?? (DateTime?)null);
+                        row[prop.Name] = date.HasValue ? date.Value.ToString("dd/MM/yyyy") : string.Empty;
                     }
-                    else Row[Prop.Name] = Prop.GetValue(Item) ?? DBNull.Value;
+                    else row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
                 }
-                TableExcel.Rows.Add(Row);
+                tableExcel.Rows.Add(row);
             }
 
-            TableExcel.Columns["PatientName"].ColumnName = "Nombre del doctor";
-            TableExcel.Columns["PatientLastName"].ColumnName = "Apellido(s) del doctor";
-            TableExcel.Columns["State"].ColumnName = "Estado";
-            TableExcel.Columns["City"].ColumnName = "Ciudad";
-            TableExcel.Columns["Phone"].ColumnName = "Teléfono(s)";
-            TableExcel.Columns["CellPhone"].ColumnName = "Teléfono celular";
-            TableExcel.Columns["Email"].ColumnName = "Correo electrónico";
-            TableExcel.Columns["ActivationDate"].ColumnName = "Fecha de registro";
-            TableExcel.Columns["DueDate"].ColumnName = "Fecha de vencimiento";
+            tableExcel.Columns["PatientName"].ColumnName = "Nombre del doctor";
+            tableExcel.Columns["PatientLastName"].ColumnName = "Apellido(s) del doctor";
+            tableExcel.Columns["State"].ColumnName = "Estado";
+            tableExcel.Columns["City"].ColumnName = "Ciudad";
+            tableExcel.Columns["Phone"].ColumnName = "Teléfono(s)";
+            tableExcel.Columns["CellPhone"].ColumnName = "Teléfono celular";
+            tableExcel.Columns["Email"].ColumnName = "Correo electrónico";
+            tableExcel.Columns["ActivationDate"].ColumnName = "Fecha de registro";
+            tableExcel.Columns["DueDate"].ColumnName = "Fecha de vencimiento";
 
-            return TableExcel;
+            return tableExcel;
         }
 
 
         List<ListOfPatient> GetAllPatients()
         {
-            List<ListOfPatient> query = (from r in DB.Registro
-                                         join e in DB.Estados on r.idEstado equals e.idEstado into es
+            List<ListOfPatient> query = (from r in Db.Registro
+                                         join e in Db.Estados on r.idEstado equals e.idEstado into es
                                          from e in es.DefaultIfEmpty()
-                                         join c in DB.Ciudades on r.idCiudad equals c.idciudad into ci
+                                         join c in Db.Ciudades on r.idCiudad equals c.idciudad into ci
                                          from c in ci.DefaultIfEmpty()
                                          where r.Tipo == "P"
                                          select new ListOfPatient()
@@ -145,8 +154,9 @@ namespace AdmrEmeci.Controllers
                                              CellPhone = r.TelefonoCel,
                                              Email = r.Emails.Replace(",", Environment.NewLine),
                                              ActivationDate = r.FechaRegistro.HasValue ? r.FechaRegistro.Value : (DateTime?)null,
-                                             DueDate = r.FechaExpiracion.HasValue ? r.FechaExpiracion.Value : (DateTime?)null                                             
-                                        }).AsEnumerable().Cast<ListOfPatient>().ToList();
+                                             DueDate = r.FechaExpiracion.HasValue ? r.FechaExpiracion.Value : (DateTime?)null
+                                         }).OrderByDescending(x => x.ActivationDate)
+                                         .AsEnumerable().Cast<ListOfPatient>().ToList();
             return query;
         }
     }

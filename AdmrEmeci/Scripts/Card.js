@@ -2,7 +2,7 @@
 
     var options =
         {
-            url: function (Prefix) {
+            url: function (prefix) {
                 return 'Card/AutoComplete';
             },
             getValue: function (element) {
@@ -30,16 +30,3 @@
 
     $('#CardNumber').easyAutocomplete(options);
 });
-
-function DownloadImage(Emeci)
-{
-    $.ajax({
-        url: 'Card/Download',
-        method: 'POST',
-        data: { CardNumber: Emeci },
-        success: function ()
-        {
-            window.location = '@Url.Action("Download", "Card", new { studentId = 123 })';
-        }
-    });
-}

@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EmeciModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Ciudades">
+    <Key>
+      <PropertyRef Name="idciudad" />
+    </Key>
+    <Property Name="idciudad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+    <Property Name="idEstado" Type="nvarchar" MaxLength="2" />
+    <Property Name="IdPais" Type="nvarchar" MaxLength="2" />
+  </EntityType>
+  <EntityType Name="DatosTarjeta">
+    <Key>
+      <PropertyRef Name="iddatostarjeta" />
+    </Key>
+    <Property Name="noTarjeta" Type="nvarchar" MaxLength="16" />
+    <Property Name="Coordenada" Type="nvarchar" MaxLength="3" />
+    <Property Name="Dato" Type="nvarchar" MaxLength="3" />
+    <Property Name="iddatostarjeta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'emeci.dbo.Estados' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Estados">
+    <Key>
+      <PropertyRef Name="idEstado" />
+      <PropertyRef Name="IdPais" />
+    </Key>
+    <Property Name="idEstado" Type="nvarchar" MaxLength="2" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+    <Property Name="IdPais" Type="nvarchar" MaxLength="2" Nullable="false" />
+    <Property Name="codigo" Type="nvarchar" MaxLength="2" />
+  </EntityType>
+  <EntityType Name="Registro">
+    <Key>
+      <PropertyRef Name="idRegistro" />
+    </Key>
+    <Property Name="idRegistro" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+    <Property Name="Apellido" Type="nvarchar" MaxLength="50" />
+    <Property Name="Domicilio" Type="nvarchar" MaxLength="150" />
+    <Property Name="Colonia" Type="nvarchar" MaxLength="150" />
+    <Property Name="idCiudad" Type="int" />
+    <Property Name="idEstado" Type="nvarchar" MaxLength="2" />
+    <Property Name="IdPais" Type="nvarchar" MaxLength="2" />
+    <Property Name="Telefono" Type="nvarchar" MaxLength="50" />
+    <Property Name="TelefonoCel" Type="nvarchar" MaxLength="50" />
+    <Property Name="Tipo" Type="nvarchar" MaxLength="1" />
+    <Property Name="Status" Type="nvarchar" MaxLength="1" />
+    <Property Name="IdUsuario" Type="nvarchar" MaxLength="25" />
+    <Property Name="FechaRegistro" Type="smalldatetime" />
+    <Property Name="FechaExpiracion" Type="smalldatetime" />
+    <Property Name="Emails" Type="nvarchar" MaxLength="150" />
+    <Property Name="FechaRenovacion" Type="smalldatetime" />
+    <Property Name="OtraCiudad" Type="nvarchar" MaxLength="50" />
+    <Property Name="NoExt" Type="nvarchar" MaxLength="5" />
+    <Property Name="CodigoPostal" Type="nvarchar" MaxLength="5" />
+    <Property Name="clave" Type="nvarchar" MaxLength="15" />
+    <Property Name="Emeci" Type="nvarchar" MaxLength="16" />
+    <Property Name="apellido2" Type="nvarchar" MaxLength="25" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'emeci.dbo.view_getpatients' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityContainer Name="EmeciModelStoreContainer">
+    <EntitySet Name="Ciudades" EntityType="Self.Ciudades" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DatosTarjeta" EntityType="Self.DatosTarjeta" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Registro" EntityType="Self.Registro" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Estados" EntityType="Self.Estados" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[Estados].[idEstado] AS [idEstado], 
+[Estados].[Nombre] AS [Nombre], 
+[Estados].[IdPais] AS [IdPais], 
+[Estados].[codigo] AS [codigo]
+FROM [dbo].[Estados] AS [Estados]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

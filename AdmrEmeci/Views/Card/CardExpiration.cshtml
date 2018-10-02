@@ -1,0 +1,96 @@
+﻿@using PagedList.Mvc;
+@using AdmrEmeci.Manager.Models;
+@model AdmrEmeci.Models.ListOfPatientModel
+@section Scripts
+{
+    <script src="~/Content/jquery.easy-autocomplete.min.js"></script>
+    <script src="~/Scripts/Seeker.js"></script>
+    <script src="~/Scripts/cardExpiration.js"></script>
+}
+<style type="text/css">
+    .cardExpired {
+        background-color: lightcoral !important;
+        color: white;
+    }
+
+    .cardSelected {
+        background-color: antiquewhite !important;
+        color: black;
+    }
+</style>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content-header">
+    <h1>Renovar tarjetas EMECI</h1>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                @using (Html.BeginForm("CardExpiration", "Card", FormMethod.Post, new { @id = "content_form"}))
+                {
+                    @Html.HiddenFor(x => x.EmeciSelected)
+                    <div class="box-header">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <h3 class="box-title">Listado de pacientes</h3>
+                            </div>
+                            <div class="col-lg-3 pull-right text-center">
+                                <a onclick="Renovation()" class="btn btn-primary">Renovar</a>
+                            </div>
+                        </div>
+                    </div>
+                    @Html.Partial("~/Views/Helper/Seeker.cshtml")
+                    <div class="box-body">
+                        @if (!string.IsNullOrEmpty(Model.EmeciSelected))
+                        {
+                            <p>
+                                <a href="@Url.Action("CardExpiration", "Card")">(x) remover filtro</a>
+                            </p>
+                        }
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <th># EMECI</th>
+                                        <th>Nombre</th>
+                                        <th>Fecha de registro</th>
+                                        <th>Fecha de expiraci&oacute;n</th>
+                                        <th>Fecha de renovaci&oacute;n</th>
+                                        <th>Estatus</th>
+                                        <th>Renovar tarjeta</th>
+                                    </tr>
+                                    @foreach (PatientModel row in Model.Patients)
+                                    {
+                                        <tr class="@(row.StatusDateCard == PatientModel.StatusDate.Vencida ? "cardExpired" : "")">
+                                            <td>@row.Emeci</td>
+                                            <td>@row.Name</td>
+                                            <td>@(row.ActivationDate.HasValue ? row.ActivationDate.Value.ToString("dd/MM/yyyy") : "")</td>
+                                            <td>@(row.DueDate.HasValue ? row.DueDate.Value.ToString("dd/MM/yyyy") : "")</td>
+                                            <td>@(row.RenovationDate.HasValue ? row.RenovationDate.Value.ToString("dd/MM/yyyy") : "")</td>
+                                            <td>@(Enum.GetName(typeof(PatientModel.StatusDate), row.StatusDateCard))</td>
+                                            <td class="text-center">
+                                                <input onclick="SaveEmeci(this, '@(row.Emeci)', '@(row.StatusDateCard)')" id="row_@(row.Emeci)" type="checkbox" />
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="box-footer clearfix">
+                        @if (string.IsNullOrEmpty(Model.EmeciSelected))
+                        {
+                            @Html.PagedListPager(Model.Patients, Page => Url.Action("CardExpiration", new { Page, PageSize = Model.Patients.PageSize }))
+                        }
+                    </div>
+                    <div class="box-footer" id="showEmecis">
+                        <h2>Registros seleccionados</h2>
+                        <ul class="list-inline" id="listEmeci"></ul>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
